@@ -172,6 +172,16 @@ class HomePage extends StatelessWidget {
               title: 'PEMPROGRAMAN PERANGKAT BERGERAK MULTIMEDIA',
               progress: 0.86,
             ),
+             _progressItem(
+              image: 'assets/images/bahasa inggris bussines and scientific.jpg',
+              title: 'BAHASA INGGRIS BUSSINES AND SCIENTIFIC',
+              progress: 0.86,
+            ),
+            _progressItem(
+              image: 'assets/images/olahraga.jpg',
+              title: 'OLAHRAGA',
+              progress: 0.86,
+            ),
 
             const SizedBox(height: 100),
           ],
