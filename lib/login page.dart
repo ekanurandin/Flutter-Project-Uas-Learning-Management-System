@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -77,13 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                         height: 46,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               PageRouteBuilder(
-                                pageBuilder: (context, animation, secondaryAnimation) => Scaffold(
-                                  appBar: AppBar(title: Text('Halaman Home')),
-                                  body: Center(child: Text('Welcome to Home Page')),
-                                ),
+                                pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
                                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                   const begin = Offset(1.0, 0.0);
                                   const end = Offset.zero;
