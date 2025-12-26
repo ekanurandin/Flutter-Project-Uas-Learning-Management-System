@@ -205,9 +205,9 @@ class HomePage extends StatelessWidget {
           unselectedItemColor: Colors.grey,
           selectedFontSize: 12,
           unselectedFontSize: 12,
-          currentIndex: 0, // aktif di Home
+          currentIndex: 0, 
           onTap: (index) {
-            // nanti bisa isi navigasi
+          
           },
           items: const [
             BottomNavigationBarItem(

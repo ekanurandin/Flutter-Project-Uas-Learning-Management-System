@@ -106,12 +106,13 @@ class ProfilePage extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red.shade700,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red.shade700,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
+                    ),
                       icon: Icon(Icons.logout),
                       label: Text('Log Out'),
                       onPressed: () {},
@@ -127,23 +128,35 @@ class ProfilePage extends StatelessWidget {
       ),
 
       
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: Color(0xFFB74A4A),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Kelas Saya',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifikasi',
-          ),
-        ],
+      bottomNavigationBar: SizedBox(
+        width: 375,
+        height: 56,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: const Color.fromARGB(255, 209, 87, 87),
+          selectedItemColor: const Color.fromARGB(255, 255, 252, 252),
+          unselectedItemColor: Colors.grey,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          currentIndex: 0,
+          onTap: (index) {
+
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              label: 'Kelas Saya',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'Notifikasi',
+            ),
+          ],
+        ),
       ),
     );
   }
