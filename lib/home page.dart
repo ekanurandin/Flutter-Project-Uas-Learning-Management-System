@@ -167,6 +167,11 @@ class HomePage extends StatelessWidget {
               title: 'SISTEM OPERASI',
               progress: 0.90,
             ),
+            _progressItem(
+              image: 'assets/images/pemrograman perangkat bergerak multimedia.jpg',
+              title: 'PEMPROGRAMAN PERANGKAT BERGERAK MULTIMEDIA',
+              progress: 0.86,
+            ),
 
             const SizedBox(height: 100),
           ],
