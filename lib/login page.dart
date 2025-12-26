@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Column(
               children: [
-                // === GAMBAR TERPOTONG ===
+                
                 ClipPath(
                   clipper: HeaderClipper(),
                   child: Image.asset(
@@ -116,59 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                           onTap: () {
                             showModalBottomSheet(
                               context: context,
-                              builder: (context) {
-                                return Stack(
-                                  children: [
-                                    Container(
-                                      height: 200,
-                                      alignment: Alignment.center,
-                                      child: const Text(
-                                        'Bantuan / HELP IDN',
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 4,
-                                      left: 133,
-                                      child: GestureDetector(
-                                        onVerticalDragUpdate: (details) {
-                                          if (details.delta.dy > 0) {
-                                            Navigator.of(context).pop();
-                                          }
-                                        },
-                                        child: Container(
-                                          width: 109,
-                                          height: 6,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            borderRadius: BorderRadius.circular(50),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 21,
-                                      left: 123,
-                                      child: Image.asset(
-                                        'assets/images/indonesia.png',
-                                        width: 35,
-                                        height: 22,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 21,
-                                      left: 215,
-                                      child: Image.asset(
-                                        'assets/images/inggris.png',
-                                        width: 37,
-                                        height: 22,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
+                              builder: (context) => _HelpBottomSheet(),
                             );
                           },
                           child: const Text(
@@ -182,8 +130,17 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
 
-                      const SizedBox(height: 32), // JARAK AMAN
+                      const SizedBox(height: 32), 
                     ],
+                  ),
+                ),
+
+                
+                ClipPath(
+                  clipper: BottomClipper(),
+                  child: Container(
+                    height: 130,
+                    color: const Color(0xFFB74848),
                   ),
                 ),
               ],
@@ -248,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            // Line below email
+            
             Positioned(
               top: 430,
               left: 21,
@@ -258,7 +215,7 @@ class _LoginPageState extends State<LoginPage> {
                 color: Color(0xFFB74848),
               ),
             ),
-            // Line below password
+            
             Positioned(
               top: 495,
               left: 21,
@@ -289,4 +246,181 @@ class HeaderClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class BottomClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+
+    path.lineTo(0, 40);
+
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      0,
+      size.width * 0.5,
+      40,
+    );
+
+    path.quadraticBezierTo(
+      size.width * 0.75,
+      80,
+      size.width,
+      40,
+    );
+
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class _HelpBottomSheet extends StatefulWidget {
+  @override
+  State<_HelpBottomSheet> createState() => _HelpBottomSheetState();
+}
+
+class _HelpBottomSheetState extends State<_HelpBottomSheet> {
+  String language = 'id';
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.65,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      child: Column(
+        children: [
+          const SizedBox(height: 12),
+
+          
+          Container(
+            width: 60,
+            height: 5,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade400,
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _languageItem(
+                code: 'id',
+                flag: 'assets/images/indonesia.png',
+              ),
+              const SizedBox(width: 40),
+              _languageItem(
+                code: 'en',
+                flag: 'assets/images/inggris.png',
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 20),
+
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: language == 'id' ? _helpID() : _helpEN(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _helpID() {
+    return const Text(
+      '''Akses hanya untuk Dosen dan Mahasiswa Telkom University.
+
+Login menggunakan Akun Microsoft Office 365 dengan mengikuti petunjuk berikut:
+
+Username (Akun iGracias) ditambahkan "@365.telkomuniversity.ac.id"
+Password (Akun iGracias) pada kolom Password.
+
+Kegagalan yang terjadi pada Autentikasi disebabkan oleh:
+• Password belum diubah menjadi "Strong Password"
+
+Pastikan Anda telah melakukan perubahan Password di iGracias.
+
+Informasi lebih lanjut dapat menghubungi Layanan CeLOE Helpdesk:
+
+Mail : infoceloe@telkomuniversity.ac.id
+WhatsApp : +62 821-1666-3563
+''',
+      style: TextStyle(fontSize: 15, height: 1.6),
+    );
+  }
+
+  Widget _helpEN() {
+    return const Text(
+      '''Access is limited to Lecturers and Students of Telkom University.
+
+Login using your Microsoft Office 365 account by following these instructions:
+
+Username (iGracias Account) add "@365.telkomuniversity.ac.id"
+Password (iGracias Account) in the Password field.
+
+Authentication failure may occur because:
+• Password has not been changed to a "Strong Password"
+
+Please ensure you have updated your password in iGracias.
+
+For further information, contact CeLOE Helpdesk:
+
+Email : infoceloe@telkomuniversity.ac.id
+WhatsApp : +62 821-1666-3563
+''',
+      style: TextStyle(fontSize: 15, height: 1.6),
+    );
+  }
+
+  Widget _languageItem({
+    required String code,
+    required String flag,
+  }) {
+    final bool isActive = language == code;
+
+    return GestureDetector(
+      onTap: () => setState(() => language = code),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(flag, width: 26),
+          const SizedBox(height: 6),
+          Text(
+            code.toUpperCase(),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: isActive ? Colors.black : Colors.grey,
+            ),
+          ),
+          const SizedBox(height: 4),
+
+          
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: isActive ? 14 : 0,
+            height: 3,
+            decoration: BoxDecoration(
+              color: const Color(0x80000000),
+              borderRadius: BorderRadius.circular(50),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
