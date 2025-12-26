@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -40,22 +41,30 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.red.shade800,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      children: const [
-                        Text(
-                          'MAHASISWA',
-                          style: TextStyle(color: Colors.white, fontSize: 12),
-                        ),
-                        SizedBox(width: 6),
-                        Icon(Icons.person, color: Colors.white, size: 16),
-                      ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade800,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: const [
+                          Text(
+                            'MAHASISWA',
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          ),
+                          SizedBox(width: 6),
+                          Icon(Icons.person, color: Colors.white, size: 16),
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -181,7 +190,7 @@ class HomePage extends StatelessWidget {
               progress: 0.86,
             ),
 
-            const SizedBox(height: 80), // beri jarak agar tidak ketutup navbar
+            const SizedBox(height: 80),
           ],
         ),
       ),
