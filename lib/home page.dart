@@ -9,8 +9,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            
             Container(
               padding: const EdgeInsets.fromLTRB(20, 50, 20, 30),
               decoration: const BoxDecoration(
@@ -183,29 +181,40 @@ class HomePage extends StatelessWidget {
               progress: 0.86,
             ),
 
-            const SizedBox(height: 100),
+            const SizedBox(height: 80), // beri jarak agar tidak ketutup navbar
           ],
         ),
       ),
 
-      
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: Color(0xFFAF1116),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Kelas Saya',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifikasi',
-          ),
-        ],
+      bottomNavigationBar: SizedBox(
+        width: 375,
+        height: 56,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: const Color.fromARGB(255, 209, 87, 87),
+          selectedItemColor: const Color.fromARGB(255, 255, 252, 252),
+          unselectedItemColor: Colors.grey,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          currentIndex: 0, // aktif di Home
+          onTap: (index) {
+            // nanti bisa isi navigasi
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              label: 'Kelas Saya',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'Notifikasi',
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -258,6 +267,17 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  static Widget _navItem(IconData icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: Color(0xFFAF1116)),
+        const SizedBox(height: 4),
+        Text(label, style: const TextStyle(fontSize: 12, color: Color(0xFFAF1116))),
+      ],
     );
   }
 }
