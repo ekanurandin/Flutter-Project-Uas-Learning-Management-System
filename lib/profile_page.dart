@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'home page.dart';
 import 'class_page.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  int _selectedTabIndex = 0; 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,9 +78,9 @@ class ProfilePage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          _tabItem('About Me', true),
-                          _tabItem('Kelas', false),
-                          _tabItem('Edit Profile', false),
+                          _tabItem('About Me', 0),
+                          _tabItem('Kelas', 1),
+                          _tabItem('Edit Profile', 2),
                         ],
                       ),
                     ),
@@ -82,46 +89,7 @@ class ProfilePage extends StatelessWidget {
 
                 SizedBox(height: 24),
 
-                // INFORMASI USER
-                _sectionTitle('Informasi User'),
-                _infoItem('Email address',
-                    'akucantik@gmail.com.uim.ac.id'),
-                _infoItem(
-                    'Program Studi', 'S1 Teknik Informatika'),
-                _infoItem('Fakultas', 'Teknik'),
-
-                SizedBox(height: 20),
-
-                // AKTIVITAS LOGIN
-                _sectionTitle('Aktivitas Login'),
-                _infoItem('First access to site',
-                    'Monday, 7 September 2020, 9:27 AM'),
-                _infoItem('Last access to site',
-                    'Tuesday, 22 June 2021, 9:44 PM'),
-
-                SizedBox(height: 24),
-
-                // BUTTON LOGOUT
-                Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red.shade700,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                      icon: Icon(Icons.logout),
-                      label: Text('Log Out'),
-                      onPressed: () {},
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 80),
+                _getTabContent(),
               ],
             ),
           ),
@@ -173,24 +141,32 @@ class ProfilePage extends StatelessWidget {
   }
 
   
-  Widget _tabItem(String title, bool active) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontWeight: active ? FontWeight.bold : FontWeight.normal,
+  Widget _tabItem(String title, int index) {
+    bool active = _selectedTabIndex == index;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedTabIndex = index;
+        });
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: active ? FontWeight.bold : FontWeight.normal,
+            ),
           ),
-        ),
-        SizedBox(height: 4),
-        if (active)
-          Container(
-            width: 30,
-            height: 3,
-            color: Colors.black,
-          ),
-      ],
+          SizedBox(height: 4),
+          if (active)
+            Container(
+              width: 30,
+              height: 3,
+              color: Colors.black,
+            ),
+        ],
+      ),
     );
   }
 
@@ -226,6 +202,166 @@ class ProfilePage extends StatelessWidget {
             Text(value, style: TextStyle(fontSize: 14)),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _getTabContent() {
+    switch (_selectedTabIndex) {
+      case 0:
+        return _aboutMeContent();
+      case 1:
+        return _kelasContent();
+      case 2:
+        return _editProfileContent();
+      default:
+        return Container();
+    }
+  }
+
+  Widget _aboutMeContent() {
+    return Column(
+      children: [
+        // INFORMASI USER
+        _sectionTitle('Informasi User'),
+        _infoItem('Email address', 'akucantik@gmail.com.uim.ac.id'),
+        _infoItem('Program Studi', 'S1 Teknik Informatika'),
+        _infoItem('Fakultas', 'Teknik'),
+
+        SizedBox(height: 20),
+
+        // AKTIVITAS LOGIN
+        _sectionTitle('Aktivitas Login'),
+        _infoItem('First access to site', 'Monday, 7 September 2020, 9:27 AM'),
+        _infoItem('Last access to site', 'Tuesday, 22 June 2021, 9:44 PM'),
+
+        SizedBox(height: 24),
+
+        // BUTTON LOGOUT
+        Padding(
+          padding: const EdgeInsets.only(right: 16),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red.shade700,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              icon: Icon(Icons.logout),
+              label: Text('Log Out'),
+              onPressed: () {},
+            ),
+          ),
+        ),
+
+        SizedBox(height: 80),
+      ],
+    );
+  }
+
+  Widget _kelasContent() {
+    return Column(
+      children: [
+        _kelasListItem(
+          title: 'BAHASA INGGRIS: BUSINESS AND SCIENTIFIC',
+          subtitle: 'D4SM-41-GABI [ARS]',
+          date: 'Tanggal Mulai Monday, 8 February 2021',
+        ),
+        _kelasListItem(
+          title: 'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
+          subtitle: 'D4SM-42-03 [ADY]',
+          date: 'Tanggal Mulai Monday, 8 February 2021',
+        ),
+        _kelasListItem(
+          title: 'KEWARGANEGARAAN',
+          subtitle: 'D4SM-41-GABI [BBO], JUMAT 2',
+          date: 'Tanggal Mulai Monday, 8 February 2021',
+        ),
+        _kelasListItem(
+          title: 'OLAH RAGA D3TT-44-02',
+          subtitle: '[EYR]',
+          date: 'Tanggal Mulai Monday, 8 February 2021',
+        ),
+        _kelasListItem(
+          title: 'PEMROGRAMAN MULTIMEDIA INTERAKTIF',
+          subtitle: 'D4SM-43-04 [TPR]',
+          date: 'Tanggal Mulai Monday, 8 February 2021',
+        ),
+        _kelasListItem(
+          title: 'PEMROGRAMAN PERANGKAT BERGERAK MULTIMEDIA',
+          subtitle: 'D4SM-41-GABI [APJ]',
+          date: 'Tanggal Mulai Monday, 8 February 2021',
+        ),
+        _kelasListItem(
+          title: 'SISTEM OPERASI',
+          subtitle: 'D4SM-44-02 [DDS]',
+          date: 'Tanggal Mulai Monday, 8 February 2021',
+        ),
+        SizedBox(height: 80),
+      ],
+    );
+  }
+
+  Widget _editProfileContent() {
+    return Center(
+      child: Text('Edit Profile content here'),
+    );
+  }
+
+  Widget _kelasListItem({
+    required String title,
+    required String subtitle,
+    required String date,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // PIL BIRU KIRI
+          Container(
+            width: 60,
+            height: 30,
+            decoration: BoxDecoration(
+              color: Color(0xFF8EC1E8),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+
+          SizedBox(width: 16),
+
+          // TEXT KANAN
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: TextStyle(fontSize: 13),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  date,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
