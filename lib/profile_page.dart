@@ -114,10 +114,11 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
+
+          SizedBox(height: 80),
         ],
       ),
 
-      
       bottomNavigationBar: SizedBox(
         width: 375,
         height: 56,
@@ -316,8 +317,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
         ),
-
-        SizedBox(height: 80),
       ],
     );
   }
@@ -403,26 +402,34 @@ class _ProfilePageState extends State<ProfilePage> {
 
           SizedBox(height: 24),
 
-          // TOMBOL SIMPAN KIRI BAWAH
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey.shade300,
-              foregroundColor: Colors.black,
-              elevation: 0,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-            ),
-            onPressed: () {
-              setState(() {
-                userName = '${firstNameController.text} ${lastNameController.text}';
-                userEmail = emailController.text;
-                userProgram = programController.text;
-                userFakultas = fakultasController.text;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Profile updated')),
-              );
-            },
-            child: Text('Simpan'),
+          // TOMBOL SIMPAN
+          Row(
+            children: [
+              Spacer(),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey.shade300,
+                  foregroundColor: Colors.black,
+                  elevation: 0,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    userName = '${firstNameController.text} ${lastNameController.text}';
+                    userEmail = emailController.text;
+                    userProgram = programController.text;
+                    userFakultas = fakultasController.text;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Perubahan telah disimpan')),
+                  );
+                },
+                child: Text('Simpan'),
+              ),
+            ],
           ),
         ],
       ),
