@@ -21,23 +21,28 @@ class NotificationItem {
 final List<NotificationItem> notifications = [
   NotificationItem(
     type: NotificationType.assignment,
-    description: 'Anda memiliki tugas baru di mata kuliah Desain UI/UX.',
-    timestamp: '2 jam yang lalu',
+    description: 'Anda telah mengirimkan pengajuan tugas untuk pengumpulan laporan Akhir Assessement 3 (Tugas Besar)',
+    timestamp: '3 hari 9 jam yang lalu',
   ),
   NotificationItem(
     type: NotificationType.quiz,
-    description: 'Jadwal ujian akhir semester telah diumumkan.',
-    timestamp: '1 hari yang lalu',
+    description: 'Anda telah mengirimkan pengajuan tugas untuk pengumpulan Laporan Akhir Assessement 3 (Tugas Besar)',
+    timestamp: '3 hari 9 jam yang lalu',
   ),
   NotificationItem(
     type: NotificationType.assignment,
-    description: 'Nilai tugas Anda untuk Sistem Operasi telah diunggah.',
-    timestamp: '3 hari yang lalu',
+    description: 'Anda telah mengirimkan pengajuan tugas untuk pengumpulan Laporan Akhir Assessement 3 (Tugas Besar)',
+    timestamp: '3 hari 9 jam yang lalu',
   ),
   NotificationItem(
     type: NotificationType.quiz,
-    description: 'Jangan lupa mengumpulkan tugas sebelum deadline.',
-    timestamp: '5 hari yang lalu',
+    description: 'Anda telah mengirimkan pengajuan tugas untuk pengumpulan Laporan Akhir Assessement 3 (Tugas Besar)',
+    timestamp: '3 hari 9 jam yang lalu',
+  ),
+  NotificationItem(
+    type: NotificationType.assignment,
+    description: 'Anda telah mengirimkan pengajuan tugas untuk pengumpulan Laporan Akhir Assessement 3 (Tugas Besar)',
+    timestamp: '3 hari 9 jam yang lalu',
   ),
 ];
 
@@ -61,13 +66,8 @@ class NotificationPage extends StatelessWidget {
         foregroundColor: Colors.black,
         elevation: 0,
       ),
-      body: ListView.separated(
+      body: ListView.builder(
         itemCount: notifications.length,
-        separatorBuilder: (context, index) => Divider(
-          height: 1,
-          thickness: 0.6,
-          color: Colors.grey.shade300,
-        ),
         itemBuilder: (context, index) {
           final item = notifications[index];
           return Padding(
