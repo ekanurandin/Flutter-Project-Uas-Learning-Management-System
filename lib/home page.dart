@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
 import 'class_page.dart';
+import 'announcement_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -129,14 +130,22 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Pengumuman Terakhir',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    'Lihat Semua',
-                    style: TextStyle(color: Colors.blue),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AnnouncementPage()),
+                      );
+                    },
+                    child: const Text(
+                      'Lihat Semua',
+                      style: TextStyle(color: Colors.blue),
+                    ),
                   ),
                 ],
               ),
