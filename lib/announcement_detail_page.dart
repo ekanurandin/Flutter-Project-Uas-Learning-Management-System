@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'home page.dart';
+import 'class_page.dart';
 
 class AnnouncementDetailPage extends StatelessWidget {
   final String title;
@@ -49,9 +51,12 @@ class AnnouncementDetailPage extends StatelessWidget {
               children: [
                 const Icon(Icons.person, size: 14, color: Colors.grey),
                 const SizedBox(width: 4),
-                Text(
-                  'By $author - $date',
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                Flexible(
+                  child: Text(
+                    'By $author - $date',
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    softWrap: true,
+                  ),
                 ),
               ],
             ),
@@ -92,6 +97,46 @@ class AnnouncementDetailPage extends StatelessWidget {
                 height: 1.0,
                 letterSpacing: 0.0,
               ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: 375,
+        height: 56,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: const Color.fromARGB(255, 209, 87, 87),
+          selectedItemColor: const Color.fromARGB(255, 255, 252, 252),
+          unselectedItemColor: Colors.grey,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          currentIndex: 0,
+          onTap: (index) {
+            if (index == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            } else if (index == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ClassPage()),
+              );
+            }
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              label: 'Kelas Saya',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'Notifikasi',
             ),
           ],
         ),
