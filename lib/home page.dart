@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
+import 'class_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -205,9 +206,14 @@ class HomePage extends StatelessWidget {
           unselectedItemColor: Colors.grey,
           selectedFontSize: 12,
           unselectedFontSize: 12,
-          currentIndex: 0, 
+          currentIndex: 0,
           onTap: (index) {
-          
+            if (index == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ClassPage()),
+              );
+            }
           },
           items: const [
             BottomNavigationBarItem(
