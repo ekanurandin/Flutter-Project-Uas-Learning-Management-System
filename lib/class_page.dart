@@ -9,8 +9,7 @@ class ClassPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFFB74A4A),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          color: Colors.white,
+          icon: Image.asset('assets/images/back icon.png', width: 24, height: 24),
           onPressed: () {
             Navigator.pushReplacement(
               context,
