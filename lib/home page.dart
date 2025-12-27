@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'profile_page.dart';
 import 'class_page.dart';
 import 'announcement_page.dart';
+import 'notification_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -221,6 +222,11 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ClassPage()),
+              );
+            } else if (index == 2) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationPage()),
               );
             }
           },
