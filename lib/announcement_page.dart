@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'home page.dart';
+import 'class_page.dart';
 
 class AnnouncementPage extends StatelessWidget {
   @override
@@ -35,6 +37,46 @@ class AnnouncementPage extends StatelessWidget {
             date: 'Minggu, 10 Januari 2021, 9:30',
           ),
         ],
+      ),
+      bottomNavigationBar: SizedBox(
+        width: 375,
+        height: 56,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: const Color.fromARGB(255, 209, 87, 87),
+          selectedItemColor: const Color.fromARGB(255, 255, 252, 252),
+          unselectedItemColor: Colors.grey,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          currentIndex: 0,
+          onTap: (index) {
+            if (index == 0) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            } else if (index == 1) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ClassPage()),
+              );
+            }
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              label: 'Kelas Saya',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'Notifikasi',
+            ),
+          ],
+        ),
       ),
     );
   }
