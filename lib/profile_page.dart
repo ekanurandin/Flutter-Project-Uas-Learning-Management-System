@@ -15,14 +15,16 @@ class _ProfilePageState extends State<ProfilePage> {
   String userProgram = 'S1 Teknik Informatika';
   String userFakultas = 'Teknik';
 
-  TextEditingController nameController = TextEditingController(text: 'EKA NUR ANDINI');
+  TextEditingController firstNameController = TextEditingController(text: 'EKA');
+  TextEditingController lastNameController = TextEditingController(text: 'NUR ANDINI');
   TextEditingController emailController = TextEditingController(text: 'akucantik@gmail.com.uim.ac.id');
   TextEditingController programController = TextEditingController(text: 'S1 Teknik Informatika');
   TextEditingController fakultasController = TextEditingController(text: 'Teknik');
 
   @override
   void dispose() {
-    nameController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     emailController.dispose();
     programController.dispose();
     fakultasController.dispose();
@@ -225,6 +227,45 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  Widget _inputBox({
+    required TextEditingController controller,
+    required String label,
+    int maxLines = 1,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: 13),
+        ),
+        SizedBox(height: 6),
+        TextFormField(
+          controller: controller,
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: maxLines > 1 ? 12 : 0,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.black),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.black),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.black),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _getTabContent() {
     switch (_selectedTabIndex) {
       case 0:
@@ -326,30 +367,53 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _editProfileContent() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            controller: nameController,
-            decoration: InputDecoration(labelText: 'Name'),
+          _inputBox(
+            controller: firstNameController,
+            label: 'Nama Pertama',
           ),
-          TextFormField(
+          SizedBox(height: 12),
+
+          _inputBox(
+            controller: lastNameController,
+            label: 'Nama Terakhir',
+          ),
+          SizedBox(height: 12),
+
+          _inputBox(
             controller: emailController,
-            decoration: InputDecoration(labelText: 'Email'),
+            label: 'E-mail Address',
           ),
-          TextFormField(
+          SizedBox(height: 12),
+
+          _inputBox(
             controller: programController,
-            decoration: InputDecoration(labelText: 'Program Studi'),
+            label: 'Negara',
           ),
-          TextFormField(
+          SizedBox(height: 12),
+
+          _inputBox(
             controller: fakultasController,
-            decoration: InputDecoration(labelText: 'Fakultas'),
+            label: 'Deskripsi',
+            maxLines: 4,
           ),
-          SizedBox(height: 20),
+
+          SizedBox(height: 24),
+
+          // TOMBOL SIMPAN KIRI BAWAH
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey.shade300,
+              foregroundColor: Colors.black,
+              elevation: 0,
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+            ),
             onPressed: () {
               setState(() {
-                userName = nameController.text;
+                userName = '${firstNameController.text} ${lastNameController.text}';
                 userEmail = emailController.text;
                 userProgram = programController.text;
                 userFakultas = fakultasController.text;
@@ -358,7 +422,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 SnackBar(content: Text('Profile updated')),
               );
             },
-            child: Text('Save'),
+            child: Text('Simpan'),
           ),
         ],
       ),
