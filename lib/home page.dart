@@ -132,9 +132,11 @@ class HomePage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Pengumuman Terakhir',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: const Text(
+                      'Pengumuman Terakhir',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -297,17 +299,6 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-
-  static Widget _navItem(IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, color: Color(0xFFAF1116)),
-        const SizedBox(height: 4),
-        Text(label, style: const TextStyle(fontSize: 12, color: Color(0xFFAF1116))),
-      ],
     );
   }
 }
