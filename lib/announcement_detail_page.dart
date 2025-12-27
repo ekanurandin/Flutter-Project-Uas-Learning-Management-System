@@ -67,11 +67,13 @@ class AnnouncementDetailPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Isi Pengumuman
-            const Text(
-              'Maintenance LMS',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+            const Center(
+              child: Text(
+                'Maintenance LMS',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
 
@@ -83,7 +85,13 @@ class AnnouncementDetailPage extends StatelessWidget {
               'Demikian informasi ini kami sampaikan, mohon maaf atas ketidaknyamanannya.\n\n'
               'Hormat Kami,\n'
               'CeLOE Telkom University',
-              style: TextStyle(fontSize: 14, height: 1.6),
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w300,
+                fontSize: 11,
+                height: 1.0,
+                letterSpacing: 0.0,
+              ),
             ),
           ],
         ),
