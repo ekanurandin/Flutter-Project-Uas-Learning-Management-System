@@ -8,7 +8,26 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  int _selectedTabIndex = 0; 
+  int _selectedTabIndex = 0;
+
+  String userName = 'EKA NUR ANDINI';
+  String userEmail = 'akucantik@gmail.com.uim.ac.id';
+  String userProgram = 'S1 Teknik Informatika';
+  String userFakultas = 'Teknik';
+
+  TextEditingController nameController = TextEditingController(text: 'EKA NUR ANDINI');
+  TextEditingController emailController = TextEditingController(text: 'akucantik@gmail.com.uim.ac.id');
+  TextEditingController programController = TextEditingController(text: 'S1 Teknik Informatika');
+  TextEditingController fakultasController = TextEditingController(text: 'Teknik');
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    programController.dispose();
+    fakultasController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 
                 Text(
-                  'EKA NUR ANDINI',
+                  userName,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -224,9 +243,9 @@ class _ProfilePageState extends State<ProfilePage> {
       children: [
         // INFORMASI USER
         _sectionTitle('Informasi User'),
-        _infoItem('Email address', 'akucantik@gmail.com.uim.ac.id'),
-        _infoItem('Program Studi', 'S1 Teknik Informatika'),
-        _infoItem('Fakultas', 'Teknik'),
+        _infoItem('Email address', userEmail),
+        _infoItem('Program Studi', userProgram),
+        _infoItem('Fakultas', userFakultas),
 
         SizedBox(height: 20),
 
@@ -306,8 +325,43 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _editProfileContent() {
-    return Center(
-      child: Text('Edit Profile content here'),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          TextFormField(
+            controller: nameController,
+            decoration: InputDecoration(labelText: 'Name'),
+          ),
+          TextFormField(
+            controller: emailController,
+            decoration: InputDecoration(labelText: 'Email'),
+          ),
+          TextFormField(
+            controller: programController,
+            decoration: InputDecoration(labelText: 'Program Studi'),
+          ),
+          TextFormField(
+            controller: fakultasController,
+            decoration: InputDecoration(labelText: 'Fakultas'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                userName = nameController.text;
+                userEmail = emailController.text;
+                userProgram = programController.text;
+                userFakultas = fakultasController.text;
+              });
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Profile updated')),
+              );
+            },
+            child: Text('Save'),
+          ),
+        ],
+      ),
     );
   }
 
