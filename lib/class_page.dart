@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home page.dart';
+import 'class_dashboard_page.dart';
 
 class ClassPage extends StatelessWidget {
   @override
@@ -30,6 +31,12 @@ class ClassPage extends StatelessWidget {
               image: 'assets/images/desain uiux.png',
               title: 'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
               progress: 0.89,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ClassDetailPage()),
+                );
+              },
             ),
             _classItem(
               image: 'assets/images/pendidikan pancasila.jpg',
@@ -104,49 +111,53 @@ class ClassPage extends StatelessWidget {
     required String image,
     required String title,
     required double progress,
+    VoidCallback? onTap,
   }) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(image, width: 70, height: 70, fit: BoxFit.cover),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    LinearProgressIndicator(
-                      value: progress,
-                      backgroundColor: Colors.grey.shade300,
-                      color: Color(0xFFAF1116),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      '${(progress * 100).toInt()} % Selesai',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
+      child: GestureDetector(
+        onTap: onTap,
+        child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(image, width: 70, height: 70, fit: BoxFit.cover),
                 ),
-              ),
-            ],
+                SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      LinearProgressIndicator(
+                        value: progress,
+                        backgroundColor: Colors.grey.shade300,
+                        color: Color(0xFFAF1116),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        '${(progress * 100).toInt()} % Selesai',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
