@@ -134,8 +134,8 @@ class ClassDetailPage extends StatelessWidget {
             ),
             const Spacer(),
             Icon(
-              selesai ? Icons.check_circle : Icons.radio_button_unchecked,
-              color: selesai ? Colors.green : Colors.grey,
+              Icons.check_circle,
+              color: selesai ? Colors.green : Colors.grey.shade600,
             ),
           ],
         ),
