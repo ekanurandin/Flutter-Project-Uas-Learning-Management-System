@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
                 ClipPath(
                   clipper: HeaderClipper(),
                   child: Image.asset(
-                    'assets/images/uim.jpg',
+                    'assets/images/telkom.jpg',
                     height: 260,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -234,10 +234,16 @@ class HeaderClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-    path.lineTo(0, size.height - 50);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 50);
+
+    // kiri
+    path.lineTo(0, size.height - 10);
+
+    // kanan
+    path.lineTo(size.width, size.height - 80);
+
+    // kanan atas
     path.lineTo(size.width, 0);
+
     path.close();
     return path;
   }
