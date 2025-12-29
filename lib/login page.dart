@@ -145,8 +145,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             // LOGO positioned absolutely
             Positioned(
-              top: 207,
-              left: 150,
+              top: 180,
+              left: 148,
               child: Stack(
                 children: [
                   // White ellipse background
@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 75,
                       height: 75,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Color(0xFFB74848),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.5),
@@ -170,13 +170,13 @@ class _LoginPageState extends State<LoginPage> {
                   // Logo
                   Positioned(
                     top: 11.5,
-                    left: 11,
+                    left: 18,
                     child: ClipOval(
                       child: Container(
-                        width: 52,
+                        width: 39,
                         height: 52,
                         child: Image.asset(
-                          'assets/images/logo uim.png',
+                          'assets/images/LogoTelkom.png',
                           fit: BoxFit.cover,
                         ),
                       ),
