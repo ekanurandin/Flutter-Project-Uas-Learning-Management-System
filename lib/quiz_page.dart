@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'quiz_taking_page.dart';
 
 class QuizDetailPage extends StatelessWidget {
   const QuizDetailPage({super.key});
@@ -138,7 +139,12 @@ class QuizDetailPage extends StatelessWidget {
                       foregroundColor: Colors.black,
                       minimumSize: const Size(200, 40),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const QuizTakingPage()),
+                      );
+                    },
                     child: const Text('Ambil Kuis'),
                   ),
                   const SizedBox(height: 12),
