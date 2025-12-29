@@ -98,11 +98,14 @@ class ClassDetailPage extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        _materiCard(
-          pertemuan: 'Pertemuan 1',
-          judul: '01 - Pengantar User Interface Design',
-          detail: '3 URLs, 2 Files, 3 Interactive Content',
-          selesai: false,
+        Builder(
+          builder: (context) => _materiCard(
+            pertemuan: 'Pertemuan 1',
+            judul: '01 - Pengantar User Interface Design',
+            detail: '3 URLs, 2 Files, 3 Interactive Content',
+            selesai: false,
+            onTap: () => _showMateriSheet(context),
+          ),
         ),
         _materiCard(
           pertemuan: 'Pertemuan 2',
@@ -170,63 +173,238 @@ class ClassDetailPage extends StatelessWidget {
     );
   }
 
+  void _showMateriSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      ),
+      builder: (context) {
+        return DefaultTabController(
+          length: 2,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: 24,
+              left: 20,
+              right: 20,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.85,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// DRAG HANDLE
+                  Center(
+                    child: Container(
+                      width: 109,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  /// JUDUL
+                  const Text(
+                    'Pengantar User Interface Design',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  /// LABEL DESKRIPSI
+                  const Text(
+                    'Deskripsi',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  /// ISI DESKRIPSI
+                  const Text(
+                    'Antarmuka yang baik dibangun harus memperhatikan prinsip-prinsip '
+                    'desain yang ada. Hal ini diharapkan agar antarmuka yang dibangun '
+                    'bukan hanya menarik secara visual tetapi dengan memperhatikan '
+                    'kaidah-kaidah prinsip desain diharapkan akan mendukung pengguna '
+                    'dalam menggunakan produk secara baik. Pelajaran mengenai prinsip '
+                    'UID ini sudah pernah diajarkan dalam mata kuliah Implementasi '
+                    'Desain Antarmuka Pengguna tetapi pada mata kuliah ini akan direview '
+                    'kembali sehingga dapat menjadi bekal saat memasuki materi '
+                    'mengenai User Experience.',
+                    style: TextStyle(
+                      fontSize: 13,
+                      height: 1.5,
+                      color: Colors.black87,
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  /// TAB BAR
+                  const TabBar(
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: Colors.black,
+                    indicatorWeight: 2,
+                    tabs: [
+                      Tab(text: 'Lampiran Materi'),
+                      Tab(text: 'Tugas dan Kuis'),
+                    ],
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  /// TAB VIEW
+                  Expanded(
+                    child: TabBarView(
+                      children: [
+                        _lampiranMateriTabFinal(),
+                        _tugasKuisTabFinal(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _lampiranMateriTabFinal() {
+    return ListView(
+      children: [
+        _lampiranItem(Icons.link, 'Zoom Meeting Synchronous', true),
+        _lampiranItem(Icons.description_outlined, 'Pengantar User Interface Design', false),
+        _lampiranItem(Icons.description_outlined, 'Empat Teori Dasar Antarmuka Pengguna', false),
+        _lampiranItem(Icons.description_outlined, 'Empat Teori Dasar Antarmuka Pengguna', true),
+        _lampiranItem(Icons.description_outlined, 'User Interface Design for Beginner', true),
+        _lampiranItem(Icons.link, '20 Prinsip Desain', true),
+        _lampiranItem(Icons.link, 'Best Practice UI Design', true),
+      ],
+    );
+  }
+
+  Widget _lampiranItem(IconData icon, String title, bool done) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 22, color: Colors.black87),
+          const SizedBox(width: 12),
+
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 13),
+            ),
+          ),
+
+          Icon(
+            Icons.check_circle,
+            color: done ? Colors.green : Colors.grey.shade400,
+            size: 22,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _tugasKuisTabFinal() {
+    return const Center(
+      child: Text(
+        'Belum ada tugas atau kuis',
+        style: TextStyle(color: Colors.grey),
+      ),
+    );
+  }
+
   Widget _materiCard({
     required String pertemuan,
     required String judul,
     required String detail,
     required bool selesai,
+    VoidCallback? onTap,
   }) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20),
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      pertemuan,
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
                   ),
-                  child: Text(
-                    pertemuan,
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  width: 220,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        judul,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: 220,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          judul,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        detail,
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
+                        const SizedBox(height: 6),
+                        Text(
+                          detail,
+                          style: const TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            Icon(
-              Icons.check_circle,
-              color: selesai ? Colors.green : Colors.grey.shade600,
-            ),
-          ],
+                ],
+              ),
+              const Spacer(),
+              Icon(
+                Icons.check_circle,
+                color: selesai ? Colors.green : Colors.grey.shade600,
+              ),
+            ],
+          ),
         ),
       ),
     );
