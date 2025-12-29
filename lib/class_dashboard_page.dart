@@ -336,10 +336,19 @@ class ClassDetailPage extends StatelessWidget {
   }
 
   Widget _tugasKuisTabFinal() {
-    return const Center(
-      child: Text(
-        'Belum ada tugas atau kuis',
-        style: TextStyle(color: Colors.grey),
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/anak.png', width: 200),
+            const SizedBox(height: 16),
+            const Text(
+              'tidak ada tugas dan kuis hari ini',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
       ),
     );
   }
