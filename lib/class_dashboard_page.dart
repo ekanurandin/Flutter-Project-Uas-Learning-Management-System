@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home page.dart';
 import 'notification_page.dart';
+import 'quiz_page.dart';
 
 class MateriDetail {
   final String title;
@@ -141,7 +142,7 @@ class ClassDetailPage extends StatelessWidget {
         body: TabBarView(
           children: [
             _materiTab(),
-            _tugasDanKuisTab(),
+            _tugasDanKuisTab(context),
           ],
         ),
         bottomNavigationBar: Container(
@@ -250,7 +251,7 @@ class ClassDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _tugasDanKuisTab() {
+  Widget _tugasDanKuisTab(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -261,6 +262,10 @@ class ClassDetailPage extends StatelessWidget {
           deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
           isDone: true,
           icon: Icons.quiz,
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const QuizDetailPage()),
+          ),
         ),
         _tugasKuisCardCustom(
           badge: 'Tugas',
@@ -647,8 +652,9 @@ class ClassDetailPage extends StatelessWidget {
     required String deadline,
     required bool isDone,
     required IconData icon,
+    VoidCallback? onTap,
   }) {
-    return Card(
+    Widget card = Card(
       margin: const EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -716,5 +722,14 @@ class ClassDetailPage extends StatelessWidget {
         ),
       ),
     );
+
+    if (onTap != null) {
+      card = GestureDetector(
+        onTap: onTap,
+        child: card,
+      );
+    }
+
+    return card;
   }
 }
