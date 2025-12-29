@@ -2,7 +2,113 @@ import 'package:flutter/material.dart';
 import 'home page.dart';
 import 'notification_page.dart';
 
+class MateriDetail {
+  final String title;
+  final String description;
+  final List<MateriItem> lampiran;
+  final List<TaskItem> tugas;
+
+  MateriDetail({
+    required this.title,
+    required this.description,
+    required this.lampiran,
+    required this.tugas,
+  });
+}
+
+class MateriItem {
+  final IconData icon;
+  final String title;
+  final bool done;
+
+  MateriItem(this.icon, this.title, this.done);
+}
+
+class TaskItem {
+  final String badge;
+  final Color badgeColor;
+  final String title;
+  final String description;
+  final String deadline;
+  final bool isDone;
+  final IconData icon;
+
+  TaskItem({
+    required this.badge,
+    required this.badgeColor,
+    required this.title,
+    required this.description,
+    required this.deadline,
+    required this.isDone,
+    required this.icon,
+  });
+}
+
 class ClassDetailPage extends StatelessWidget {
+  final Map<int, MateriDetail> materiData = {
+    1: MateriDetail(
+      title: 'Pengantar User Interface Design',
+      description:
+          'Antarmuka yang baik dibangun harus memperhatikan prinsip-prinsip desain '
+          'yang ada. Hal ini diharapkan agar antarmuka yang dibangun bukan hanya '
+          'menarik secara visual tetapi juga mendukung pengguna.',
+      lampiran: [
+        MateriItem(Icons.link, 'Zoom Meeting Synchronous', true),
+        MateriItem(Icons.description_outlined, 'Pengantar User Interface Design', false),
+        MateriItem(Icons.description_outlined, 'Empat Teori Dasar Antarmuka Pengguna', false),
+        MateriItem(Icons.description_outlined, 'User Interface Design for Beginner', true),
+        MateriItem(Icons.link, '20 Prinsip Desain', true),
+        MateriItem(Icons.link, 'Best Practice UI Design', true),
+      ],
+      tugas: [],
+    ),
+    2: MateriDetail(
+      title: 'Konsep User Interface Design',
+      description:
+          'Konsep dasar User Interface Design akan dipelajari bagaimana '
+          'membangun sebuah Interaction Design pada antarmuka. Interaction '
+          'sangat penting untuk aplikasi berkomunikasi dengan pengguna. '
+          'Lalu dipelajari juga poin-poin penting pada interaction design '
+          'seperti visibility, feedback, limitation, consistency dan affordance.',
+      lampiran: [
+        MateriItem(Icons.link, 'Zoom Meeting Synchronous', true),
+        MateriItem(Icons.description_outlined, 'Elemen-elemen Antarmuka Pengguna', true),
+        MateriItem(Icons.description_outlined, 'UID Guidelines and Principles', true),
+        MateriItem(Icons.description_outlined, 'User Profile', true),
+        MateriItem(Icons.link, 'Principles of User Interface Design URL', true),
+      ],
+      tugas: [
+        TaskItem(
+          badge: 'QUIZ',
+          badgeColor: Colors.blue,
+          title: 'Quiz Review 02',
+          description:
+              'Silahkan kerjakan kuis ini dalam waktu 15 menit sebagai nilai '
+              'pertama komponen kuis. Jangan lupa klik tombol Submit Answer '
+              'setelah menjawab seluruh pertanyaan.\n\n'
+              'Kerjakan sebelum hari Jum’at, 26 Februari 2021 jam 23:59 WIB.',
+          deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
+          isDone: true,
+          icon: Icons.quiz,
+        ),
+        TaskItem(
+          badge: 'Tugas',
+          badgeColor: Colors.blue,
+          title: 'Tugas 02 - UID Android Mobile Game',
+          description:
+              '1. Buatlah desain tampilan (antarmuka) pada aplikasi mobile game '
+              'FPS (First Person Shooter) yang akan menjadi tugas mata kuliah '
+              'Pemrograman Aplikasi Permainan.\n'
+              '2. Desain yang dibuat melingkupi seluruh tampilan pada aplikasi/game '
+              'dari pertama kali aplikasi ...',
+          deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
+          isDone: true,
+          icon: Icons.assignment,
+        ),
+      ],
+    ),
+  };
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -104,14 +210,17 @@ class ClassDetailPage extends StatelessWidget {
             judul: '01 - Pengantar User Interface Design',
             detail: '3 URLs, 2 Files, 3 Interactive Content',
             selesai: false,
-            onTap: () => _showMateriSheet(context),
+            onTap: () => _showMateriSheet(context, 1),
           ),
         ),
-        _materiCard(
-          pertemuan: 'Pertemuan 2',
-          judul: '02 - Konsep User Interface Design',
-          detail: '2 URLs, 1 Kuis, 3 Files, 1 Tugas',
-          selesai: true,
+        Builder(
+          builder: (context) => _materiCard(
+            pertemuan: 'Pertemuan 2',
+            judul: '02 - Konsep User Interface Design',
+            detail: '2 URLs, 1 Kuis, 3 Files, 1 Tugas',
+            selesai: true,
+            onTap: () => _showMateriSheet(context, 2),
+          ),
         ),
         _materiCard(
           pertemuan: 'Pertemuan 3',
@@ -173,7 +282,9 @@ class ClassDetailPage extends StatelessWidget {
     );
   }
 
-  void _showMateriSheet(BuildContext context) {
+  void _showMateriSheet(BuildContext context, int pertemuanId) {
+    final materi = materiData[pertemuanId]!;
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -211,8 +322,8 @@ class ClassDetailPage extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   /// JUDUL
-                  const Text(
-                    'Pengantar User Interface Design',
+                  Text(
+                    materi.title,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -233,16 +344,8 @@ class ClassDetailPage extends StatelessWidget {
                   const SizedBox(height: 8),
 
                   /// ISI DESKRIPSI
-                  const Text(
-                    'Antarmuka yang baik dibangun harus memperhatikan prinsip-prinsip '
-                    'desain yang ada. Hal ini diharapkan agar antarmuka yang dibangun '
-                    'bukan hanya menarik secara visual tetapi dengan memperhatikan '
-                    'kaidah-kaidah prinsip desain diharapkan akan mendukung pengguna '
-                    'dalam menggunakan produk secara baik. Pelajaran mengenai prinsip '
-                    'UID ini sudah pernah diajarkan dalam mata kuliah Implementasi '
-                    'Desain Antarmuka Pengguna tetapi pada mata kuliah ini akan direview '
-                    'kembali sehingga dapat menjadi bekal saat memasuki materi '
-                    'mengenai User Experience.',
+                  Text(
+                    materi.description,
                     style: TextStyle(
                       fontSize: 13,
                       height: 1.5,
@@ -270,8 +373,8 @@ class ClassDetailPage extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        _lampiranMateriTabFinal(),
-                        _tugasKuisTabFinal(),
+                        _lampiranMateriTabFinal(materi),
+                        _tugasKuisTabFinal(materi),
                       ],
                     ),
                   ),
@@ -284,17 +387,13 @@ class ClassDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _lampiranMateriTabFinal() {
-    return ListView(
-      children: [
-        _lampiranItem(Icons.link, 'Zoom Meeting Synchronous', true),
-        _lampiranItem(Icons.description_outlined, 'Pengantar User Interface Design', false),
-        _lampiranItem(Icons.description_outlined, 'Empat Teori Dasar Antarmuka Pengguna', false),
-        _lampiranItem(Icons.description_outlined, 'Empat Teori Dasar Antarmuka Pengguna', true),
-        _lampiranItem(Icons.description_outlined, 'User Interface Design for Beginner', true),
-        _lampiranItem(Icons.link, '20 Prinsip Desain', true),
-        _lampiranItem(Icons.link, 'Best Practice UI Design', true),
-      ],
+  Widget _lampiranMateriTabFinal(MateriDetail materi) {
+    return ListView.builder(
+      itemCount: materi.lampiran.length,
+      itemBuilder: (context, index) {
+        final item = materi.lampiran[index];
+        return _lampiranItem(item.icon, item.title, item.done);
+      },
     );
   }
 
@@ -335,21 +434,143 @@ class ClassDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _tugasKuisTabFinal() {
-    return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/images/anak.png', width: 200),
-            const SizedBox(height: 16),
-            const Text(
-              'tidak ada tugas dan kuis hari ini',
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        ),
+  Widget _infoItem(IconData icon, String title) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(32),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
+      child: Row(
+        children: [
+          Icon(icon, size: 22, color: Colors.black87),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 13),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _tugasKuisDetailCard(TaskItem task) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// ICON KIRI
+          Icon(task.icon, size: 36, color: Colors.black87),
+          const SizedBox(width: 12),
+
+          /// KONTEN
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// BADGE
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  color: task.badgeColor,
+                  child: Text(
+                    task.badge,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                /// JUDUL
+                Text(
+                  task.title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                /// DESKRIPSI (INI YANG PENTING)
+                Text(
+                  task.description,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    height: 1.5,
+                    color: Colors.black87,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                /// DEADLINE
+                Text(
+                  task.deadline,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          /// STATUS
+          Icon(
+            Icons.check_circle,
+            color: task.isDone ? Colors.green : Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _tugasKuisTabFinal(MateriDetail materi) {
+    if (materi.tugas.isEmpty) {
+      return ListView(
+        children: [
+          _infoItem(
+            Icons.info_outline,
+            'Belum ada tugas atau kuis pada pertemuan ini',
+          ),
+        ],
+      );
+    }
+
+    return ListView.builder(
+      itemCount: materi.tugas.length,
+      itemBuilder: (context, index) {
+        final task = materi.tugas[index];
+        return _tugasKuisDetailCard(task);
+      },
     );
   }
 
