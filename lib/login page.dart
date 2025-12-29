@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'home page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -195,11 +196,14 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.center,
                 child: Text(
                   'Login',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
+                    height: 1.0,
+                    letterSpacing: 0.0,
                     color: Colors.black,
                   ),
+                  textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false, applyHeightToLastDescent: false),
                 ),
               ),
             ),
