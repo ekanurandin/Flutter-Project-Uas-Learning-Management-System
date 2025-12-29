@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 85,
-            color: const Color(0xFFB74848), // merah Telkom
+            color: const Color(0xFFB74848),
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,12 +65,20 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const CircleAvatar(
-                      radius: 18,
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.person,
-                        color: Color(0xFFB74848),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfilePage()),
+                        );
+                      },
+                      child: const CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          Icons.person,
+                          color: Color(0xFFB74848),
+                        ),
                       ),
                     ),
                   ],

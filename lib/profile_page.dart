@@ -4,9 +4,11 @@ import 'class_page.dart';
 import 'login page.dart';
 
 class ProfilePage extends StatefulWidget {
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
+   const ProfilePage({super.key});
+
+   @override
+   _ProfilePageState createState() => _ProfilePageState();
+ }
 
 class _ProfilePageState extends State<ProfilePage> {
   int _selectedTabIndex = 0;
@@ -111,11 +113,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(height: 24),
 
                 _getTabContent(),
+
+                SizedBox(height: 80),
               ],
             ),
           ),
-
-          SizedBox(height: 80),
         ],
       ),
 
@@ -378,7 +380,6 @@ class _ProfilePageState extends State<ProfilePage> {
           subtitle: 'D4SM-44-02 [DDS]',
           date: 'Tanggal Mulai Monday, 8 February 2021',
         ),
-        SizedBox(height: 80),
       ],
     );
   }
