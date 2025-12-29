@@ -13,9 +13,12 @@ class ClassDetailPage extends StatelessWidget {
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pop(context),
           ),
-          title: const Text(
-            'DESAIN ANTARMUKA & PENGALAMAN\nPENGGUNA D4SM-42-03 [ADY]',
-            style: TextStyle(fontSize: 14),
+          title: Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: const Text(
+              'DESAIN ANTARMUKA & PENGALAMAN\nPENGGUNA D4SM-42-03 [ADY]',
+              style: TextStyle(fontSize: 14, color: Colors.white),
+            ),
           ),
           bottom: const TabBar(
             labelColor: Colors.white,
@@ -30,7 +33,7 @@ class ClassDetailPage extends StatelessWidget {
         body: TabBarView(
           children: [
             _materiTab(),
-            Center(child: Text('Tugas dan Kuis')),
+            _tugasDanKuisTab(),
           ],
         ),
       ),
@@ -76,6 +79,38 @@ class ClassDetailPage extends StatelessWidget {
           judul: '06 - Assessment 1',
           detail: '3 URLs, 2 Files, 3 Interactive Content',
           selesai: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _tugasDanKuisTab() {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        _tugasKuisCardCustom(
+          badge: 'QUIZ',
+          badgeColor: Colors.blue,
+          title: 'Quiz Review 01',
+          deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
+          isDone: true,
+          icon: Icons.quiz,
+        ),
+        _tugasKuisCardCustom(
+          badge: 'Tugas',
+          badgeColor: Colors.blue,
+          title: 'Tugas 01 - UID Android Mobile Game',
+          deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
+          isDone: false,
+          icon: Icons.assignment,
+        ),
+        _tugasKuisCardCustom(
+          badge: 'Pertemuan 3',
+          badgeColor: Colors.blue,
+          title: 'Kuis - Assessment 2',
+          deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
+          isDone: true,
+          icon: Icons.quiz,
         ),
       ],
     );
@@ -136,6 +171,84 @@ class ClassDetailPage extends StatelessWidget {
             Icon(
               Icons.check_circle,
               color: selesai ? Colors.green : Colors.grey.shade600,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _tugasKuisCardCustom({
+    required String badge,
+    required Color badgeColor,
+    required String title,
+    required String deadline,
+    required bool isDone,
+    required IconData icon,
+  }) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ICON KIRI
+            Icon(icon, size: 36, color: Colors.black87),
+            const SizedBox(width: 12),
+
+            // KONTEN
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // BADGE (RECTANGLE TANPA RADIUS)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: badgeColor,
+                    ),
+                    child: Text(
+                      badge,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+
+                  // JUDUL
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+
+                  // DEADLINE
+                  Text(
+                    deadline,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // ICON STATUS KANAN
+            Icon(
+              Icons.check_circle,
+              color: isDone ? Colors.green : Colors.grey,
             ),
           ],
         ),

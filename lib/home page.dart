@@ -42,6 +42,8 @@ class HomePage extends StatelessWidget {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -56,7 +58,7 @@ class HomePage extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                         decoration: BoxDecoration(
                           color: Colors.red.shade700,
                           borderRadius: BorderRadius.circular(30),
@@ -76,8 +78,8 @@ class HomePage extends StatelessWidget {
 
                             Image.asset(
                               'assets/images/Group 5.png',
-                              width: 25,
-                              height: 25,
+                              width: 20,
+                              height: 20,
                               fit: BoxFit.contain,
                             ),
                           ],
