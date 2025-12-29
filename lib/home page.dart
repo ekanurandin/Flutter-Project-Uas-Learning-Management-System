@@ -9,62 +9,45 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            width: double.infinity,
-            height: 85,
-            color: const Color(0xFFB74848),
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // TEXT KIRI
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Text(
-                        'Hallo,',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        'EKA NUR ANDINI',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // KANAN (MAHASISWA + ICON)
-                Row(
+          Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 85,
+                color: const Color(0xFFB74848),
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.red.shade700,
-                      ), // ⬅️ TETAP RECTANGLE
-                      child: const Text(
-                        'MAHASISWA',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
+                    // TEXT KIRI
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          Text(
+                            'Hallo,',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'EKA NUR ANDINI',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 10),
+
+                    
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -72,20 +55,38 @@ class HomePage extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => ProfilePage()),
                         );
                       },
-                      child: const CircleAvatar(
-                        radius: 18,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.person,
-                          color: Color(0xFFB74848),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.red.shade700,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'MAHASISWA',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+
+                            Image.asset(
+                              'assets/images/Group 5.png',
+                              width: 25,
+                              height: 25,
+                              fit: BoxFit.contain,
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -227,11 +228,34 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-
-      bottomNavigationBar: SizedBox(
-        width: 375,
-        height: 56,
-        child: BottomNavigationBar(
+          Positioned(
+            top: 46,
+            left: 258,
+            child: Container(
+              width: 106,
+              height: 31,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.5),
+              ),
+            ),
+          ),
+          ],
+        ),
+        bottomNavigationBar: Container(
+          width: 375,
+          height: 56,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
+            ),
+            child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: const Color.fromARGB(255, 209, 87, 87),
           selectedItemColor: const Color.fromARGB(255, 255, 252, 252),
@@ -268,7 +292,8 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-    );
+        ),
+      );
   }
 
   
