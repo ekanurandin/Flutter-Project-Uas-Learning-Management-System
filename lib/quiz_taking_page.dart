@@ -9,14 +9,15 @@ class QuizTakingPage extends StatefulWidget {
 
 class _QuizTakingPageState extends State<QuizTakingPage> {
   int currentQuestionIndex = 0;
-  List<int?> selectedAnswers = List.filled(15, null);
+  final List<int> realQuestionNumbers = [1, 2, 15];
+  List<int?> selectedAnswers = List.filled(3, null);
 
   void nextQuestion() {
-    if (currentQuestionIndex < questions.length - 1) {
-      setState(() {
+    setState(() {
+      if (currentQuestionIndex < realQuestionNumbers.length - 1) {
         currentQuestionIndex++;
-      });
-    }
+      }
+    });
   }
 
   void previousQuestion() {
@@ -40,145 +41,13 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
       'correct': 0,
     },
     {
-      'question': 'Apa itu Flutter?',
+      'question': 'Dalam perancangan web yang baik, untuk teks yang menyampaikan isi konten digunakan font yang sama di setiap halaman, ini merupakan salah satu tujuan yaitu?',
       'options': [
-        'Bahasa pemrograman',
-        'Framework UI',
-        'Database',
-        'Server',
-        'OS'
-      ],
-      'correct': 1,
-    },
-    {
-      'question': 'Apa fungsi dari StatefulWidget?',
-      'options': [
-        'Widget statis',
-        'Widget yang bisa berubah',
-        'Widget untuk teks',
-        'Widget untuk gambar',
-        'Widget untuk tombol'
-      ],
-      'correct': 1,
-    },
-    {
-      'question': 'Bahasa pemrograman utama untuk Flutter adalah?',
-      'options': [
-        'Java',
-        'Kotlin',
-        'Dart',
-        'Swift',
-        'Python'
-      ],
-      'correct': 2,
-    },
-    {
-      'question': 'Apa itu hot reload?',
-      'options': [
-        'Restart aplikasi',
-        'Update kode tanpa restart',
-        'Compile ulang',
-        'Debug mode',
-        'Release mode'
-      ],
-      'correct': 1,
-    },
-    {
-      'question': 'Widget apa yang digunakan untuk layout vertikal?',
-      'options': [
-        'Row',
-        'Column',
-        'Stack',
-        'Container',
-        'ListView'
-      ],
-      'correct': 1,
-    },
-    {
-      'question': 'Apa itu pubspec.yaml?',
-      'options': [
-        'File konfigurasi proyek',
-        'File kode utama',
-        'File untuk test',
-        'File untuk assets',
-        'File untuk dependencies'
-      ],
-      'correct': 0,
-    },
-    {
-      'question': 'Bagaimana cara menambahkan padding pada widget?',
-      'options': [
-        'Menggunakan Padding widget',
-        'Menggunakan Margin widget',
-        'Menggunakan SizedBox',
-        'Menggunakan Container',
-        'Menggunakan Expanded'
-      ],
-      'correct': 0,
-    },
-    {
-      'question': 'Apa itu BuildContext?',
-      'options': [
-        'Konteks build widget',
-        'Konteks aplikasi',
-        'Konteks database',
-        'Konteks network',
-        'Konteks file'
-      ],
-      'correct': 0,
-    },
-    {
-      'question': 'Widget mana yang digunakan untuk navigasi?',
-      'options': [
-        'Navigator',
-        'Route',
-        'Scaffold',
-        'AppBar',
-        'BottomNavigationBar'
-      ],
-      'correct': 0,
-    },
-    {
-      'question': 'Apa itu async/await?',
-      'options': [
-        'Untuk loop',
-        'Untuk conditional',
-        'Untuk asynchronous programming',
-        'Untuk synchronous programming',
-        'Untuk error handling'
-      ],
-      'correct': 2,
-    },
-    {
-      'question': 'Bagaimana cara membuat list di Flutter?',
-      'options': [
-        'Menggunakan ListView',
-        'Menggunakan Column',
-        'Menggunakan Row',
-        'Menggunakan Stack',
-        'Menggunakan Container'
-      ],
-      'correct': 0,
-    },
-    {
-      'question': 'Apa itu InheritedWidget?',
-      'options': [
-        'Widget untuk inheritance',
-        'Widget untuk state management',
-        'Widget untuk animation',
-        'Widget untuk layout',
-        'Widget untuk input'
-      ],
-      'correct': 1,
-    },
-    {
-      'question': 'Bahasa apa yang digunakan untuk Android development?',
-      'options': [
-        'Java',
-        'Kotlin',
-        'Dart',
-        'Swift',
-        'Python'
+        'Integrasi',
+        'Standarisasi',
+        'Konsistensi',
+        'Koefensi',
+        'Koreksi'
       ],
       'correct': 1,
     },
@@ -232,57 +101,56 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
           children: [
 
             /// ======== NOMOR SOAL BULAT ========
-            SizedBox(
-              height: 40,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 15,
-                itemBuilder: (context, index) {
-                  bool isActive = index == currentQuestionIndex;
-                  bool isAnswered = selectedAnswers[index] != null;
+            Wrap(
+              spacing: 6,
+              runSpacing: 8,
+              children: List.generate(15, (index) {
+                int number = index + 1;
+                int activeNumber = realQuestionNumbers[currentQuestionIndex];
 
-                  Color bgColor = Colors.white;
-                  Color borderColor = Colors.grey;
-                  Color textColor = Colors.black;
+                bool isActive = number == activeNumber;
+                bool isAnswered = realQuestionNumbers
+                    .take(currentQuestionIndex)
+                    .contains(number);
+                bool allGreen = currentQuestionIndex == realQuestionNumbers.length - 1;
 
-                  if (isActive) {
-                    bgColor = Colors.white;
-                    borderColor = Colors.grey;
-                    textColor = Colors.black;
-                  } else if (isAnswered) {
-                    bgColor = Colors.green;
-                    borderColor = Colors.green;
-                    textColor = Colors.white;
-                  }
+                Color bgColor = Colors.white;
+                Color borderColor = Colors.grey;
+                Color textColor = Colors.black;
 
-                  return Container(
-                    margin: const EdgeInsets.only(right: 8),
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: bgColor,
-                      border: Border.all(color: borderColor),
-                      shape: BoxShape.circle,
+                if ((isActive && !allGreen) || isAnswered || (allGreen && number != 15)) {
+                  bgColor = Colors.green;
+                  borderColor = Colors.green;
+                  textColor = Colors.white;
+                }
+
+                return Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: bgColor,
+                    border: Border.all(color: borderColor),
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$number',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
                     ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${index + 1}',
-                      style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                },
-              ),
+                  ),
+                );
+              }),
             ),
 
             const SizedBox(height: 20),
 
             /// ======== SOAL NOMOR ========
             Text(
-              'Soal Nomor ${currentQuestionIndex + 1} / 15',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              'Soal Nomor ${realQuestionNumbers[currentQuestionIndex]} / 15',
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 15),
@@ -380,19 +248,28 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
                     onPressed: previousQuestion,
                     child: const Text('Soal Sebelum nya'),
                   ),
-                  /// SELANJUTNYA
+
+                  /// SELANJUTNYA / SELESAI
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade200,
-                      foregroundColor: Colors.black,
+                      backgroundColor: currentQuestionIndex == questions.length - 1
+                          ? Colors.green
+                          : Colors.grey.shade200,
+                      foregroundColor: currentQuestionIndex == questions.length - 1
+                          ? Colors.white
+                          : Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: selectedAnswers[currentQuestionIndex] != null
-                        ? nextQuestion
-                        : null,
-                    child: const Text('Soal Selanjut nya'),
+                    onPressed: currentQuestionIndex == questions.length - 1
+                        ? (selectedAnswers[currentQuestionIndex] != null ? () => Navigator.pop(context) : null)
+                        : (selectedAnswers[currentQuestionIndex] != null ? nextQuestion : null),
+                    child: Text(
+                      currentQuestionIndex == questions.length - 1
+                          ? 'Selesai'
+                          : 'Soal Selanjut nya',
+                    ),
                   ),
                 ],
               ),
