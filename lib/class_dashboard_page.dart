@@ -3,6 +3,7 @@ import 'home page.dart';
 import 'notification_page.dart';
 import 'quiz_page.dart';
 import 'ppt_page.dart';
+import 'task_page.dart';
 
 class MateriDetail {
   final String title;
@@ -476,10 +477,19 @@ class ClassDetailPage extends StatelessWidget {
 
   Widget _tugasKuisDetailCard(BuildContext context, TaskItem task) {
     return GestureDetector(
-      onTap: task.icon == Icons.quiz ? () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const QuizDetailPage()),
-      ) : null,
+      onTap: () {
+      if (task.icon == Icons.quiz) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const QuizDetailPage()),
+        );
+      } else if (task.icon == Icons.assignment) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TaskPage(task: task)),
+        );
+      }
+    },
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(16),
