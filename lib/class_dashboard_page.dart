@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home page.dart';
 import 'notification_page.dart';
 import 'quiz_page.dart';
+import 'ppt_page.dart';
 
 class MateriDetail {
   final String title;
@@ -16,6 +17,7 @@ class MateriDetail {
     required this.tugas,
   });
 }
+
 
 class MateriItem {
   final IconData icon;
@@ -82,7 +84,7 @@ class ClassDetailPage extends StatelessWidget {
         TaskItem(
           badge: 'QUIZ',
           badgeColor: Colors.blue,
-          title: 'Quiz Review 02',
+          title: 'Quiz Review 01',
           description:
               'Silahkan kerjakan kuis ini dalam waktu 15 menit sebagai nilai '
               'pertama komponen kuis. Jangan lupa klik tombol Submit Answer '
@@ -95,7 +97,7 @@ class ClassDetailPage extends StatelessWidget {
         TaskItem(
           badge: 'Tugas',
           badgeColor: Colors.blue,
-          title: 'Tugas 02 - UID Android Mobile Game',
+          title: 'Tugas 01 - UID Android Mobile Game',
           description:
               '1. Buatlah desain tampilan (antarmuka) pada aplikasi mobile game '
               'FPS (First Person Shooter) yang akan menjadi tugas mata kuliah '
@@ -103,7 +105,7 @@ class ClassDetailPage extends StatelessWidget {
               '2. Desain yang dibuat melingkupi seluruh tampilan pada aplikasi/game '
               'dari pertama kali aplikasi ...',
           deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
-          isDone: true,
+          isDone: false,
           icon: Icons.assignment,
         ),
       ],
@@ -252,38 +254,32 @@ class ClassDetailPage extends StatelessWidget {
   }
 
   Widget _tugasDanKuisTab(BuildContext context) {
-    return ListView(
+    List<TaskItem> allTasks = [];
+    for (var materi in materiData.values) {
+      allTasks.addAll(materi.tugas);
+    }
+    if (allTasks.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/anak.png', width: 150, height: 150),
+            const SizedBox(height: 16),
+            const Text(
+              'Tidak ada tugas dan kuis hari ini',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+          ],
+        ),
+      );
+    }
+    return ListView.builder(
       padding: const EdgeInsets.all(16),
-      children: [
-        _tugasKuisCardCustom(
-          badge: 'QUIZ',
-          badgeColor: Colors.blue,
-          title: 'Quiz Review 01',
-          deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
-          isDone: true,
-          icon: Icons.quiz,
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const QuizDetailPage()),
-          ),
-        ),
-        _tugasKuisCardCustom(
-          badge: 'Tugas',
-          badgeColor: Colors.blue,
-          title: 'Tugas 01 - UID Android Mobile Game',
-          deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
-          isDone: false,
-          icon: Icons.assignment,
-        ),
-        _tugasKuisCardCustom(
-          badge: 'Pertemuan 3',
-          badgeColor: Colors.blue,
-          title: 'Kuis - Assessment 2',
-          deadline: 'Tenggat Waktu : 26 Februari 2021 23:59 WIB',
-          isDone: true,
-          icon: Icons.quiz,
-        ),
-      ],
+      itemCount: allTasks.length,
+      itemBuilder: (context, index) {
+        final task = allTasks[index];
+        return _tugasKuisDetailCard(context, task);
+      },
     );
   }
 
@@ -397,44 +393,53 @@ class ClassDetailPage extends StatelessWidget {
       itemCount: materi.lampiran.length,
       itemBuilder: (context, index) {
         final item = materi.lampiran[index];
-        return _lampiranItem(item.icon, item.title, item.done);
+        return _lampiranItem(context, item.icon, item.title, item.done);
       },
     );
   }
 
-  Widget _lampiranItem(IconData icon, String title, bool done) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(32),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 22, color: Colors.black87),
-          const SizedBox(width: 12),
 
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 13),
+
+
+  Widget _lampiranItem(BuildContext context, IconData icon, String title, bool done) {
+    return GestureDetector(
+      onTap: title == 'Pengantar User Interface Design' ? () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const PPTPage()),
+      ) : null,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(32),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
-          ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 22, color: Colors.black87),
+            const SizedBox(width: 12),
 
-          Icon(
-            Icons.check_circle,
-            color: done ? Colors.green : Colors.grey.shade400,
-            size: 22,
-          ),
-        ],
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 13),
+              ),
+            ),
+
+            Icon(
+              Icons.check_circle,
+              color: done ? Colors.green : Colors.grey.shade400,
+              size: 22,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -469,91 +474,97 @@ class ClassDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _tugasKuisDetailCard(TaskItem task) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// ICON KIRI
-          Icon(task.icon, size: 36, color: Colors.black87),
-          const SizedBox(width: 12),
+  Widget _tugasKuisDetailCard(BuildContext context, TaskItem task) {
+    return GestureDetector(
+      onTap: task.icon == Icons.quiz ? () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const QuizDetailPage()),
+      ) : null,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// ICON KIRI
+            Icon(task.icon, size: 36, color: Colors.black87),
+            const SizedBox(width: 12),
 
-          /// KONTEN
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// BADGE
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  color: task.badgeColor,
-                  child: Text(
-                    task.badge,
+            /// KONTEN
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// BADGE
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    color: task.badgeColor,
+                    child: Text(
+                      task.badge,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  /// JUDUL
+                  Text(
+                    task.title,
                     style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 8),
+                  const SizedBox(height: 8),
 
-                /// JUDUL
-                Text(
-                  task.title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                  /// DESKRIPSI (INI YANG PENTING)
+                  Text(
+                    task.description,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      height: 1.5,
+                      color: Colors.black87,
+                    ),
                   ),
-                ),
 
-                const SizedBox(height: 8),
+                  const SizedBox(height: 8),
 
-                /// DESKRIPSI (INI YANG PENTING)
-                Text(
-                  task.description,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    height: 1.5,
-                    color: Colors.black87,
+                  /// DEADLINE
+                  Text(
+                    task.deadline,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-
-                const SizedBox(height: 8),
-
-                /// DEADLINE
-                Text(
-                  task.deadline,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
 
-          /// STATUS
-          Icon(
-            Icons.check_circle,
-            color: task.isDone ? Colors.green : Colors.grey,
-          ),
-        ],
+            /// STATUS
+            Icon(
+              Icons.check_circle,
+              color: task.isDone ? Colors.green : Colors.grey,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -574,7 +585,7 @@ class ClassDetailPage extends StatelessWidget {
       itemCount: materi.tugas.length,
       itemBuilder: (context, index) {
         final task = materi.tugas[index];
-        return _tugasKuisDetailCard(task);
+        return _tugasKuisDetailCard(context, task);
       },
     );
   }
@@ -645,91 +656,4 @@ class ClassDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _tugasKuisCardCustom({
-    required String badge,
-    required Color badgeColor,
-    required String title,
-    required String deadline,
-    required bool isDone,
-    required IconData icon,
-    VoidCallback? onTap,
-  }) {
-    Widget card = Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ICON KIRI
-            Icon(icon, size: 36, color: Colors.black87),
-            const SizedBox(width: 12),
-
-            // KONTEN
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // BADGE (RECTANGLE TANPA RADIUS)
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: badgeColor,
-                    ),
-                    child: Text(
-                      badge,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // JUDUL
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-
-                  // DEADLINE
-                  Text(
-                    deadline,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // ICON STATUS KANAN
-            Icon(
-              Icons.check_circle,
-              color: isDone ? Colors.green : Colors.grey,
-            ),
-          ],
-        ),
-      ),
-    );
-
-    if (onTap != null) {
-      card = GestureDetector(
-        onTap: onTap,
-        child: card,
-      );
-    }
-
-    return card;
-  }
 }
