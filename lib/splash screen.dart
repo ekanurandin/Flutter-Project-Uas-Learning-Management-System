@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
     _controller.forward();
 
     Timer(const Duration(seconds: 3), () {
-      // arahkan ke halaman login / home
+     
       Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (_) => LoginPage()));
     });
@@ -53,9 +53,9 @@ class _SplashScreenState extends State<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // LOGO TEXT
+              
               Text(
-                "LSM",
+                "CELOE",
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.w600,
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
 
               const SizedBox(height: 8),
 
-              // GARIS TIPIS (MODIFIKASI KECIL)
+
               Container(
                 width: 60,
                 height: 2,
@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen>
 
               const SizedBox(height: 12),
 
-              // SUBTITLE
+              
               Text(
                 "Learning Management System",
                 style: TextStyle(

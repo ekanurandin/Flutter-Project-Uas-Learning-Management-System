@@ -9,7 +9,7 @@ class ClassPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        backgroundColor: Color(0xFFB74A4A),
+        backgroundColor: Color.fromARGB(255, 189, 60, 60),
         leading: IconButton(
           icon: Image.asset('assets/images/back icon.png', width: 24, height: 24),
           onPressed: () {
