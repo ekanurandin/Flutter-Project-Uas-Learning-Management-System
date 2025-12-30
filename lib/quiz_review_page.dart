@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'quiz_detail_review_page.dart';
 
 class QuizReviewPage extends StatelessWidget {
   final List<Map<String, dynamic>> questions;
@@ -94,7 +95,16 @@ class QuizReviewPage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QuizDetailReviewPage(
+                                question: question,
+                                selectedAnswer: selected,
+                                correctAnswer: question['correct'],
+                              ),
+                            ),
+                          );
                         },
                         child: const Text(
                           'Lihat Soal',
