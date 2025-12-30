@@ -71,7 +71,7 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      /// ================= APP BAR =================
+     
       appBar: AppBar(
         backgroundColor: const Color(0xFFB74A4A),
         elevation: 0,
@@ -93,37 +93,32 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
         ),
       ),
 
-      /// ================= BODY =================
+     
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            /// ======== NOMOR SOAL BULAT ========
+            
             Wrap(
               spacing: 6,
               runSpacing: 8,
               children: List.generate(15, (index) {
                 int number = index + 1;
                 int activeNumber = realQuestionNumbers[currentQuestionIndex];
-
                 bool isActive = number == activeNumber;
                 bool isAnswered = realQuestionNumbers
                     .take(currentQuestionIndex)
                     .contains(number);
                 bool allGreen = currentQuestionIndex == realQuestionNumbers.length - 1;
-
                 Color bgColor = Colors.white;
                 Color borderColor = Colors.grey;
                 Color textColor = Colors.black;
-
                 if ((isActive && !allGreen) || isAnswered || (allGreen && number != 15)) {
                   bgColor = Colors.green;
                   borderColor = Colors.green;
                   textColor = Colors.white;
                 }
-
                 return Container(
                   width: 24,
                   height: 24,
@@ -144,29 +139,22 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
                 );
               }),
             ),
-
             const SizedBox(height: 20),
-
-            /// ======== SOAL NOMOR ========
+            
             Text(
               'Soal Nomor ${realQuestionNumbers[currentQuestionIndex]} / 15',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(height: 15),
-
-            /// ======== PERTANYAAN ========
+           
             Text(
               question['question'],
               style: const TextStyle(fontSize: 16),
             ),
-
             const SizedBox(height: 20),
-
-            /// ======== OPSI JAWABAN ========
+          
             ...List.generate(question['options'].length, (index) {
               bool isSelected = selectedAnswers[currentQuestionIndex] == index;
-
               return GestureDetector(
                 onTap: () {
                   setState(() {
@@ -180,19 +168,15 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
                     horizontal: 16,
                   ),
                   decoration: BoxDecoration(
-                    color: isSelected
-                        ? const Color(0xFFEF6C6C)
-                        : Colors.grey.shade100,
+                    color: isSelected ? const Color(0xFFEF6C6C) : Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     children: [
                       Text(
-                        String.fromCharCode(65 + index) + '. ',
+                        '${String.fromCharCode(65 + index)}. ',
                         style: TextStyle(
-                          color: isSelected
-                              ? Colors.white
-                              : Colors.black,
+                          color: isSelected ? Colors.white : Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -200,9 +184,7 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
                         child: Text(
                           question['options'][index],
                           style: TextStyle(
-                            color: isSelected
-                                ? Colors.white
-                                : Colors.black,
+                            color: isSelected ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
@@ -211,10 +193,9 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
                 ),
               );
             }),
-
+            const SizedBox(height: 16),
             const Spacer(),
-
-            /// ======== BUTTONS ========
+           
             if (currentQuestionIndex == 0)
               Align(
                 alignment: Alignment.centerRight,
@@ -226,9 +207,7 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: selectedAnswers[currentQuestionIndex] != null
-                      ? nextQuestion
-                      : null,
+                  onPressed: selectedAnswers[currentQuestionIndex] != null ? nextQuestion : null,
                   child: const Text('Soal Selanjut nya'),
                 ),
               )
@@ -248,16 +227,11 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
                     onPressed: previousQuestion,
                     child: const Text('Soal Sebelum nya'),
                   ),
-
                   /// SELANJUTNYA / SELESAI
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: currentQuestionIndex == questions.length - 1
-                          ? Colors.green
-                          : Colors.grey.shade200,
-                      foregroundColor: currentQuestionIndex == questions.length - 1
-                          ? Colors.white
-                          : Colors.black,
+                      backgroundColor: currentQuestionIndex == questions.length - 1 ? Colors.green : Colors.grey.shade200,
+                      foregroundColor: currentQuestionIndex == questions.length - 1 ? Colors.white : Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -266,9 +240,7 @@ class _QuizTakingPageState extends State<QuizTakingPage> {
                         ? (selectedAnswers[currentQuestionIndex] != null ? () => Navigator.pop(context) : null)
                         : (selectedAnswers[currentQuestionIndex] != null ? nextQuestion : null),
                     child: Text(
-                      currentQuestionIndex == questions.length - 1
-                          ? 'Selesai'
-                          : 'Soal Selanjut nya',
+                      currentQuestionIndex == questions.length - 1 ? 'Selesai' : 'Soal Selanjut nya',
                     ),
                   ),
                 ],

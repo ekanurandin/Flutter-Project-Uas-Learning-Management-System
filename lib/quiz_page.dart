@@ -1,8 +1,45 @@
 import 'package:flutter/material.dart';
 import 'quiz_taking_page.dart';
+import 'quiz_review_page.dart';
 
 class QuizDetailPage extends StatelessWidget {
   const QuizDetailPage({super.key});
+
+  List<Map<String, dynamic>> get questions => [
+    {
+      'question': 'Radio button dapat digunakan untuk menentukan ?',
+      'options': [
+        'Jenis Kelamin',
+        'Alamat',
+        'Hobby',
+        'Riwayat Pendidikan',
+        'Umur'
+      ],
+      'correct': 0,
+    },
+    {
+      'question': 'Dalam perancangan web yang baik, untuk teks yang menyampaikan isi konten digunakan font yang sama di setiap halaman, ini merupakan salah satu tujuan yaitu?',
+      'options': [
+        'Integrasi',
+        'Standarisasi',
+        'Konsistensi',
+        'Koefensi',
+        'Koreksi'
+      ],
+      'correct': 1,
+    },
+    {
+      'question': 'Apa itu widget tree?',
+      'options': [
+        'Struktur hierarki widget',
+        'Database widget',
+        'File widget',
+        'Network widget',
+        'Storage widget'
+      ],
+      'correct': 0,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +148,18 @@ class QuizDetailPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: TextButton(
-                      onPressed: () {},
+                      style: TextButton.styleFrom(foregroundColor: Colors.blue),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => QuizReviewPage(
+                              questions: questions,
+                              selectedAnswers: [0, 1, 0],
+                            ),
+                          ),
+                        );
+                      },
                       child: const Text('Lihat'),
                     ),
                   ),
