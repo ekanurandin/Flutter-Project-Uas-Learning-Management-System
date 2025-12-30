@@ -4,6 +4,7 @@ import 'notification_page.dart';
 import 'quiz_page.dart';
 import 'ppt_page.dart';
 import 'task_page.dart';
+import 'video_player_page.dart';
 
 class MateriDetail {
   final String title;
@@ -403,11 +404,22 @@ class ClassDetailPage extends StatelessWidget {
 
 
   Widget _lampiranItem(BuildContext context, IconData icon, String title, bool done) {
-    return GestureDetector(
-      onTap: title == 'Pengantar User Interface Design' ? () => Navigator.push(
+    VoidCallback? onTap;
+    if (title == 'Pengantar User Interface Design') {
+      onTap = () => Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const PPTPage()),
-      ) : null,
+      );
+    } else if (title == 'User Interface Design for Beginner') {
+      onTap = () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const VideoPlayerPage()),
+      );
+    } else {
+      onTap = null;
+    }
+    return GestureDetector(
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -416,7 +428,7 @@ class ClassDetailPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(32),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 13),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -454,7 +466,7 @@ class ClassDetailPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(32),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 13),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
